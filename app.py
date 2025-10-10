@@ -1,10 +1,10 @@
 from flask import Flask, request
 
-APP = Flask(__name__)
+app = Flask(__name__)
 
 alunos = [
-    {"id": 1, "nome": "Anderson"}
-    {"id": 2, "nome": "Gabriel"}
+    {"id": 1, "nome": "Anderson"},
+    {"id": 2, "nome": "Gabriel"},
     {"id": 3, "nome": "Brendon"}
 ]
 
@@ -30,7 +30,7 @@ def adicionar_aluno():
     novo["id"] = len(alunos)+1
     alunos.append(novo)
 
-    return f"Aluno Cadastrado: {id} {nome}"
+    return alunos
 
 #endpoint: adicionar json aluno
 @app.route('/adicionaralunojson', methods=['POST'])
@@ -49,6 +49,15 @@ def deletar_aluno(id):
             return alunos
         return "Aluno não localizado"
    
+
+#endpoint: alterar_aluno pelo id
+@app.route('/alteraraluno/<int:id>', methods=['UPDATE'])
+def alterar_aluno(id):
+    for i, aluno in enumerate(alunos):
+        if aluno ["id"] == id:
+            alunos.pop(i)
+            return alunos
+        return "Aluno não localizado"   
 
 
 if __name__ == "__main__":
